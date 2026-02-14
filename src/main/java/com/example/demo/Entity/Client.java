@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "clientes")
@@ -16,10 +17,14 @@ public class Client {
     private String tipoIdentificacion;
     private String numeroIdentificacion;
     private String nombres;
-    private String apellidos;
-    private String correoElectronico;
+    private String apellido;
+    private String email;
     private LocalDate fechaNacimiento;
     private LocalDateTime fechaCreacion;
+    private LocalDateTime fechaModificacion;
+
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    private List<Product> products;
 
     public Client() {}
 
@@ -39,12 +44,12 @@ public class Client {
         return nombres;
     }
 
-    public String getApellidos() {
-        return apellidos;
+    public String getApellido() {
+        return apellido;
     }
 
-    public String getCorreoElectronico() {
-        return correoElectronico;
+    public String getEmail() {
+        return email;
     }
 
     public LocalDate getFechaNacimiento() {
@@ -53,6 +58,22 @@ public class Client {
 
     public LocalDateTime getFechaCreacion() {
         return fechaCreacion;
+    }
+
+    public LocalDateTime getFechaModificacion() {
+        return fechaModificacion;
+    }
+
+    public void setFechaModificacion(LocalDateTime fechaModificacion) {
+        this.fechaModificacion = fechaModificacion;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 
     public void setId(Long id) {
@@ -71,12 +92,12 @@ public class Client {
         this.nombres = nombres;
     }
 
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
+    public void setApellido(String apellidos) {
+        this.apellido = apellidos;
     }
 
-    public void setCorreoElectronico(String correoElectronico) {
-        this.correoElectronico = correoElectronico;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void setFechaNacimiento(LocalDate fechaNacimiento) {

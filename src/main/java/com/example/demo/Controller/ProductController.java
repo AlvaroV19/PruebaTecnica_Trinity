@@ -1,8 +1,12 @@
 package com.example.demo.Controller;
 
+import com.example.demo.DTO.ProductRequestDTO;
+import com.example.demo.DTO.ProductResponseDTO;
 import com.example.demo.Entity.Product;
 import com.example.demo.IService.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,37 +23,43 @@ public class ProductController {
 
     // LISTAR TODOS
     @GetMapping("/getProductos")
-    public List<Product> findAll() {
-        return productService.findAll();
+    public ResponseEntity<List<ProductResponseDTO>> findAll() {
+        return ResponseEntity.ok(productService.findAll());
     }
 
     // BUSCAR POR ID
     @GetMapping("/getProducto/{id}")
-    public Optional<Product> findById(@PathVariable Long id) {
-        return productService.findById(id);
+    public ResponseEntity<ProductResponseDTO> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(productService.findById(id));
     }
 
     // CREAR PRODUCTO (CUENTA)
     @PostMapping("/saveProducto")
-    public Product save(@RequestBody Product product) {
-        return productService.save(product);
+    public ResponseEntity<ProductResponseDTO> save(
+            @RequestBody ProductRequestDTO dto) {
+
+        ProductResponseDTO response = productService.save(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     // LISTAR PRODUCTOS POR CLIENTE
     @GetMapping("/getProductosByCliente/{clienteId}")
-    public List<Product> findByCliente(@PathVariable Long clienteId) {
-        return productService.findByCliente(clienteId);
+    public ResponseEntity<List<ProductResponseDTO>> findByClient(@PathVariable("clientId") Long clientId) {
+        return ResponseEntity.ok(productService.findByClient(clientId));
     }
 
-    // CANCELAR CUENTA
+    // CANCELAR PRODUCTO(CUENTA)
     @PutMapping("/cancelar/{id}")
     public void cancelar(@PathVariable Long id) {
         productService.cancelar(id);
     }
 
-    // ELIMINAR PRODUCTO
-    @DeleteMapping("/deleteProducto/{id}")
-    public void delete(@PathVariable Long id) {
-        productService.delete(id);
+    //ACTUALIZAR PRODUCTO
+    @PutMapping("/updateProducto/{id}")
+    public ResponseEntity<ProductResponseDTO> update(
+            @PathVariable Long id,
+            @RequestBody ProductRequestDTO dto) {
+
+        return ResponseEntity.ok(productService.update(id, dto));
     }
 }

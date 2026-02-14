@@ -1,6 +1,7 @@
 package com.example.demo.IService;
 
-import com.example.demo.Entity.Transaction;
+import com.example.demo.DTO.TransactionRequestDTO;
+import com.example.demo.DTO.TransactionResponseDTO;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -8,15 +9,15 @@ import java.util.Optional;
 
 public interface ITransactionService {
 
-    List<Transaction> findAll(); // Listar todas
+    List<TransactionResponseDTO> findAll();
 
-    Optional<Transaction> findById(Long id); // Buscar por id
+    Optional<TransactionResponseDTO> findById(Long id);
 
-    Transaction consignar(Long productoId, BigDecimal monto);
+    TransactionResponseDTO consignar(Long productoId, BigDecimal monto);
 
-    Transaction retirar(Long productoId, BigDecimal monto);
+    TransactionResponseDTO retirar(Long productoId, BigDecimal monto);
 
-    Transaction transferir(Long productoOrigenId, Long productoDestinoId, BigDecimal monto);
+    TransactionResponseDTO transferir(Long origenId, Long destinoId, BigDecimal monto);
 
-    List<Transaction> findByProducto(Long productoId);
+    List<TransactionResponseDTO> findByProducto(Long productoId);
 }
