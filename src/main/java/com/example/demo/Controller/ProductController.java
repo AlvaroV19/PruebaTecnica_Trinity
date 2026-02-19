@@ -43,8 +43,8 @@ public class ProductController {
     }
 
     // LISTAR PRODUCTOS POR CLIENTE
-    @GetMapping("/getProductosByCliente/{clienteId}")
-    public ResponseEntity<List<ProductResponseDTO>> findByClient(@PathVariable("clientId") Long clientId) {
+    @GetMapping("/ProductosByCliente/{clientId}")
+    public ResponseEntity<List<ProductResponseDTO>>  findByClient_Id(@PathVariable("clientId") Long clientId) {
         return ResponseEntity.ok(productService.findByClient(clientId));
     }
 
